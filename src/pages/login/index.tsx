@@ -1,8 +1,50 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Car, Lock, Mail } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
+import { z } from 'zod';
 import { Container } from "../../components/container";
 import { InputField } from '../../components/input';
+import { auth } from '../../services/firebaseConnection';
+const schema = z.object({
+    email: z.string().email("Enter a valid email address").nonempty("Email is required"), 
+    password: z.string().nonempty("Password is required"), 
+     
+})
+type FormData= z.infer<typeof schema>
+
 export function Login() {
+    const navigate= useNavigate();
+    const { register, handleSubmit, formState:  {errors } } = useForm<FormData>(
+        {
+            resolver: zodResolver(schema),
+            mode: 'onChange'
+        } 
+    ); 
+    useEffect(() => {
+        async function handleLogout() {
+            await  auth.signOut();
+        }
+        handleLogout(); 
+    }, [])
+    function onsubmit(data: FormData) {
+        console.log(data)
+        signInWithEmailAndPassword(auth, data.email, data.password)
+        .then((user) => {
+            navigate('/', { replace: true }) ;
+            toast.success("User successfully logged in");
+            console.log(user);     
+        })
+        .catch((error) => {
+            console.log("erro ao fazer o login no Sistema"); 
+            toast.error("Error logging into the System"); 
+           console.log(error);
+        })
+        
+    }
     return (
         <Container>
             <div  className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -26,14 +68,15 @@ export function Login() {
                 { /* FORM*/ }
                 <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-md" >
                     <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                        <form className="space-y-6">
+                        <form onSubmit={handleSubmit(onsubmit)} className="space-y-6">
                             <InputField 
                                 type="email" 
                                 name="email"  
                                 label="Email" 
                                 Icon={Mail} 
                                 autoComplete="email" 
-                                required 
+                                error={ errors.email?.message}
+                                register = { register} 
                             />
                             <InputField 
                                 type="password" 
@@ -41,7 +84,8 @@ export function Login() {
                                 label="Password" 
                                 Icon={Lock} 
                                 autoComplete="current-password" 
-                                required 
+                                error={ errors.password?.message}
+                                register = { register} 
                             /> 
 
                             <div className="flex items-center justify-between">
