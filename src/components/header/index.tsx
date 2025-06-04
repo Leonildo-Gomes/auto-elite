@@ -1,7 +1,10 @@
 import { Car, LogOut, Search, UserCircle } from 'lucide-react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 export function Header() {
-    const signed = false;
+    const { signed } = useContext(AuthContext);
+    
     return (
         <header className="bg-gradient-to-r from-blue-900 to-blue-800 text-white shadow-md">
             <div  className="container mx-auto px-4 py-4">

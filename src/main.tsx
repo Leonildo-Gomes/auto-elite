@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Toaster } from 'react-hot-toast';
 import App from './App.tsx';
+import AuthProvider from './context/AuthProvider';
 import './index.css';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -9,6 +10,8 @@ createRoot(document.getElementById('root')!).render(
       position="top-right"
       reverseOrder={false}
     />
-    <App />
+    <AuthProvider>  
+       <App />
+    </AuthProvider>
   </StrictMode>,
 )
