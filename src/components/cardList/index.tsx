@@ -1,11 +1,11 @@
-import type { Car } from "../../types";
 import { CarCard } from "../carCard";
 
+import { cars } from '../../data/cars';
 
 export function CardList() {
     const filteredCount=8;
     const totalCount= 5;
-    const cars: Car[] = [
+   /* const cars: Car[] = [
   {
     id: '1',
     make: 'BMW',
@@ -46,7 +46,7 @@ export function CardList() {
     color: 'Blue',
     image: 'https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=800',
     featured: false
-  }];
+  }];*/
     return (
         <section>
             <div className="flex justify-between items-center mb-4">

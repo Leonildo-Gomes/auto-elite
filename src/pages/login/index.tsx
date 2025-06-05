@@ -34,7 +34,7 @@ export function Login() {
         console.log(data)
         signInWithEmailAndPassword(auth, data.email, data.password)
         .then((user) => {
-            navigate('/', { replace: true }) ;
+            navigate('/managecar', { replace: true }) ;
             toast.success("User successfully logged in");
             console.log(user);     
         })

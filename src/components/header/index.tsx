@@ -31,19 +31,21 @@ export function Header() {
                     <nav className="flex items-center space-x-6">
                         <Link to="/" className="hover:text-blue-300 transition-colors duration-200">Home</Link>
                         <Link to="/inventory" className="hover:text-blue-300 transition-colors duration-200">Inventory</Link>
-                        <Link to="/services" className="hover:text-blue-300 transition-colors duration-200">Services</Link>
+                         { signed && 
+                            <Link to="/managecar" className="hover:text-blue-300 transition-colors duration-200">Manage Car</Link>
+                         }
                         <Link to="/contact" className="hover:text-blue-300 transition-colors duration-200">Contact</Link>
                         { !signed && 
                             <Link to="/login" className="hover:text-blue-300 transition-colors duration-200">
                                 <div>
-                                    <UserCircle className="h-6 w-6" /> 
+                                    <LogOut  className="h-6 w-6" /> 
                                 </div>
                             </Link> 
                         } 
                         { signed && 
                             <Link to="/login" className="hover:text-blue-300 transition-colors duration-200">
                                 <div>
-                                    <LogOut className="h-6 w-6" /> 
+                                    <UserCircle className="h-6 w-6" /> 
                                 </div>
                             </Link> 
                         } 

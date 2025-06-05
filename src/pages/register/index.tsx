@@ -37,7 +37,7 @@ export function Register() {
             updateProfile(user.user, {
                 displayName: data.name,
             })
-            navigate('/', { replace: true }) ;
+            navigate('/managecar', { replace: true }) ;
             toast.success("Welcome to the AutoElite system");
             console.log(user);     
         })

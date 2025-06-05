@@ -6,14 +6,14 @@ interface CarCardProps {
     car: CarType;
 }
 export function CarCard({ car } :   CarCardProps) {
-    const { make, model, year, price, mileage, fuelType, image, featured } = car;
+    const { make, model, year, price, mileage, fuelType, images, featured } = car;
   
    
   return (
         <div className='bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:translate-y-[-8px]'>
             { /* IMAGE*/ }
            <div>
-             <img src={image} alt={`${make} ${model}`} />
+             <img src={images[0]} alt={`${make} ${model}`} />
            </div>
            { /* INFO CAR*/ }
            <div className="p-4" >

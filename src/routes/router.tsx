@@ -4,8 +4,10 @@ import { Layout } from '../components/layout';
 import { Dashboard } from '../pages/dashboard';
 import { Home } from '../pages/home';
 import { Login } from '../pages/login';
+import { ManageCar } from '../pages/manageCar';
 import { NotFound } from '../pages/notFound';
 import { Register } from '../pages/register';
+import { Private } from './Private';
 
 const router = createBrowserRouter([
     {  
@@ -26,6 +28,10 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login/>
+            },
+            {
+                path: '/managecar',
+                element: <Private> <ManageCar/> </Private> 
             },
             {
                 path: '*',

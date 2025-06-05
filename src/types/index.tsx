@@ -9,6 +9,7 @@ export interface Car {
   transmission: string;
   bodyType: string;
   color: string;
-  image: string;
+  //image: string;
+  images: string[];
   featured: boolean;
 }
