@@ -1,5 +1,5 @@
 
-import { ArrowLeft, Calendar, Fuel, GaugeCircle, Palette, Settings } from 'lucide-react';
+import { ArrowLeft, Calendar, ChevronLeft, ChevronRight, Fuel, GaugeCircle, Palette, Settings } from 'lucide-react';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container } from '../../components/container';
@@ -8,6 +8,7 @@ import type { Car } from "../../types";
 export function DetailCar() {
     const { id } = useParams();
     const [car, setCar] = useState<Car | null>(null);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
        function findCar() {
@@ -34,6 +35,22 @@ export function DetailCar() {
        findCar();
       }, [id]); 
 
+      const nextImage = () => {
+        if(!car) {return};
+        setCurrentImageIndex((prev) => 
+            prev === car.images.length - 1 ? 0 : prev + 1
+        );
+    };
+
+    const prevImage = () => {
+         if(!car) {return};
+        setCurrentImageIndex((prev) => 
+            prev === 0 ? car.images.length - 1 : prev - 1
+        );
+    };
+    const goToImage = (index: number) => {
+    setCurrentImageIndex(index);
+  };
       if(!car) {
         return (
             <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -66,10 +83,58 @@ export function DetailCar() {
                     <div className='md:flex'>
 
                         <div className='md:w-1/2'>
-                            <img className='w-full h-96 object-cover'
-                                src={car.images[0]} 
-                                alt={car.make} 
-                            />
+                            {/* Image Carousel */}
+                            <div className='relative h-96 bg-gray-200'>
+                                <img className='w-full h-96 object-cover'
+                                src={car.images[currentImageIndex]} 
+                                alt={`${car.make}${car.model}- Image ${currentImageIndex + 1}`} 
+                                />
+                                 {/* Navigation Arrows */}
+                                
+                                    {car?.images.length > 1 && (
+                                        <>
+                                            <button className='absolute top-1/2 left-2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all'
+                                                onClick={prevImage}
+                                            >
+                                                <ChevronLeft  className="h-6 w-6"/>
+                                            </button>
+                                            <button  className='absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all'
+                                                onClick={nextImage}
+                                            >
+                                                <ChevronRight className="h-6 w-6" />
+                                            </button>
+                                    </> 
+                                )}
+                                {/* Image Counter */}
+                                {car?.images.length > 1 && (
+                                    <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white p-2 rounded-full">
+                                        {currentImageIndex + 1} / {car.images.length}
+                                    </div>
+                                )}
+                            </div>
+                            {/* Thumbnail Navigation */}
+                            {car?.images.length > 1 && (
+                                <div className='flex space-x-2 overflow-auto'>
+                                    {car.images.map((image, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => goToImage(index)}
+                                            className={`flex-shrink-0 w-20 h-16 rounded-md overflow-fidden border-2 transition-all  ${index === currentImageIndex
+                                                                ? 'border-blue-500 ring-2 ring-blue-200'
+                                                                : 'border-gray-300 hover:border-gray-400'} `} 
+                                        >
+                                            <img 
+                                                src={image} 
+                                                alt={`${car.make}${car.model}- thumbnail ${index + 1}`}
+                                                className='w-full h.full object-cover'
+                                            />
+                                        </button>
+                                    ))
+
+                                    }
+                                </div>
+                            )}
+                            
                         </div>
                         <div className='md:w-1/2 p-8'>
                             <div className='mb-6'>
