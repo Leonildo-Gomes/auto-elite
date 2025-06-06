@@ -5,48 +5,7 @@ import { cars } from '../../data/cars';
 export function CardList() {
     const filteredCount=8;
     const totalCount= 5;
-   /* const cars: Car[] = [
-  {
-    id: '1',
-    make: 'BMW',
-    model: '3 Series',
-    year: 2022,
-    price: 45000,
-    mileage: 5000,
-    fuelType: 'Gasoline',
-    transmission: 'Automatic',
-    bodyType: 'Sedan',
-    color: 'Black',
-    image: 'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=800',
-    featured: true
-  },
-  {
-    id: '2',
-    make: 'Mercedes-Benz',
-    model: 'C-Class',
-    year: 2021,
-    price: 48000,
-    mileage: 8000,
-    fuelType: 'Gasoline',
-    transmission: 'Automatic',
-    bodyType: 'Sedan',
-    color: 'Silver',
-    image: 'https://images.pexels.com/photos/120049/pexels-photo-120049.jpeg?auto=compress&cs=tinysrgb&w=800',
-    featured: true
-  }, {
-    id: '5',
-    make: 'Toyota',
-    model: 'RAV4',
-    year: 2022,
-    price: 35000,
-    mileage: 12000,
-    fuelType: 'Hybrid',
-    transmission: 'Automatic',
-    bodyType: 'SUV',
-    color: 'Blue',
-    image: 'https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=800',
-    featured: false
-  }];*/
+  
     return (
         <section>
             <div className="flex justify-between items-center mb-4">

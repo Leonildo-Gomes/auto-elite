@@ -1,10 +1,9 @@
 import { Banknote, Calendar, Fuel, GaugeCircle } from 'lucide-react';
-import type { Car as CarType } from "../../types";
+import type { CarCardProps } from "../../types";
 
 
-interface CarCardProps {
-    car: CarType;
-}
+
+
 export function CarCard({ car } :   CarCardProps) {
     const { make, model, year, price, mileage, fuelType, images, featured } = car;
   
@@ -46,7 +45,7 @@ export function CarCard({ car } :   CarCardProps) {
                     <button className='bg-gray-100 hover:bg-gray-200 text-gray-800 rounded px-3 py-1.5 text-sm transition-colors duration-200'>
                         More Details
                     </button>
-                    <button className='bg-blue-600 text-white rounded text-sm px-3 py-1.5 hover:bg-blue-700 transition-colors duration-200 '>
+                    <button className='bg-blue-600 text-white rounded text-sm px-3 py-1.5 hover:bg-gray-700 transition-colors duration-200 '>
                         Contact Seller
                     </button>
                 </div>

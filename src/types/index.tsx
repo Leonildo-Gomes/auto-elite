@@ -1,5 +1,5 @@
 export interface Car {
-  id: string;
+  id: string ;
   make: string;
   model: string;
   year: number;
@@ -9,7 +9,12 @@ export interface Car {
   transmission: string;
   bodyType: string;
   color: string;
-  //image: string;
+
   images: string[];
   featured: boolean;
+}
+
+
+ export interface CarCardProps {
+    car: Car;
 }

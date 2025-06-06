@@ -1,6 +1,7 @@
 import { Plus } from 'lucide-react';
 import { Container } from '../../components/container';
-
+import { TableColumn } from '../../components/tableColumn';
+import { cars } from '../../data/cars';
  export function ManageCar() {
     return (
        <Container>
@@ -35,6 +36,10 @@ import { Container } from '../../components/container';
                                         </th>
                                     </tr>
                                </thead>
+                               <tbody>
+                                    { cars.map( (car) => (<TableColumn car={car} />)) }
+
+                               </tbody>
                             </table>
                         </div>
                     </div>
