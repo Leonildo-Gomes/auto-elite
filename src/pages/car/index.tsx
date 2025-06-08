@@ -1,12 +1,13 @@
 
 import { ArrowLeft, Calendar, ChevronLeft, ChevronRight, Fuel, GaugeCircle, Palette, Settings } from 'lucide-react';
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Container } from '../../components/container';
 import { cars } from '../../data/cars';
 import type { Car } from "../../types";
 export function DetailCar() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [car, setCar] = useState<Car | null>(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -56,10 +57,11 @@ export function DetailCar() {
             <div className="min-h-screen bg-gray-100 flex items-center justify-center">
                 <div className="text-center">
                     <h2  className="text-2xl font-bold mb-4 text-gray-900">Vehicle not found</h2>
-                    <button className='flex justify-center items-center text-blue-600 hover:text-blue-800'>
+                    <button className='flex justify-center items-center text-blue-600 hover:text-blue-800'
+                        onClick={() => navigate(-1)} 
+                    >
                         <ArrowLeft className='h-5 w-5 mr-2' />
                         Go Back
-
                     </button>
                 </div>
                 
@@ -73,7 +75,10 @@ export function DetailCar() {
                <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
                   { /* BUTTON BACK*/  }
                   <div className='mb-6'>
-                     <button className='flex justify-center items-center text-blue-600 hover:text-blue-800'>
+                     <button 
+                            className='flex justify-center items-center text-blue-600 hover:text-blue-800'
+                            onClick={() => navigate(-1)} 
+                    >
                          <ArrowLeft className='h-5 w-5 mr-2' />
                          Go Back
                      </button>

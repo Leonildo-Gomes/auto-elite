@@ -2,6 +2,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from '../components/layout';
 import { DetailCar } from '../pages/car';
+import { NewCar } from '../pages/car/new';
 import { Dashboard } from '../pages/dashboard';
 import { Home } from '../pages/home';
 import { Login } from '../pages/login';
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             {
                 path: '/detail-car/:id',
                 element:  <DetailCar/> 
+            },
+             {
+                path: '/new-car',
+                element:  <NewCar/> 
             },
             {
                 path: '*',

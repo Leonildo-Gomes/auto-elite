@@ -1,8 +1,10 @@
 import { Plus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Container } from '../../components/container';
 import { TableColumn } from '../../components/tableColumn';
 import { cars } from '../../data/cars';
  export function ManageCar() {
+    const navigate=useNavigate();
     return (
        <Container>
             <div className='min-h-screen bg-gray-100 py-12'>
@@ -10,7 +12,9 @@ import { cars } from '../../data/cars';
                     <div className="bg-white shadow-lg rounded-lg overflow-hidden">
                         <div className='flex justify-between items-center px-6 py-4 border-b border-gray-200'>
                             <h2 className="text-2xl font-bold text-gray-900">Vehicle Management</h2>
-                            <button className='flex items-center  justify-center bg-blue-600 text-white rounded-md py-2 px-4 focus:outline-none focus:ring-offset-2 focus:ring-blue-500 cursor-pointer'>
+                            <button className='flex items-center  justify-center bg-blue-600 text-white rounded-md py-2 px-4 focus:outline-none focus:ring-offset-2 focus:ring-blue-500 cursor-pointer'
+                                    onClick={() => navigate('/new-car')}
+                            >
                                 <Plus className="h-5 w-5 mr-2" />
                                 Add New Vehicle
                             </button>
