@@ -1,5 +1,3 @@
-
-
 import type { Car } from '../types';
 
 // Mock data for car listings
@@ -19,7 +17,10 @@ export const cars: Car[] = [
       'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=800',
       'https://images.pexels.com/photos/892522/pexels-photo-892522.jpeg?auto=compress&cs=tinysrgb&w=800',
     ],
-    featured: true
+    featured: true,
+    availability: 'available',
+    location: 'New York, NY',
+    condition: 'used'
   },
   {
     id: '2',
@@ -36,7 +37,10 @@ export const cars: Car[] = [
       'https://images.pexels.com/photos/120049/pexels-photo-120049.jpeg?auto=compress&cs=tinysrgb&w=800',
       'https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=800',
     ],
-    featured: true
+    featured: true,
+    availability: 'available',
+    location: 'Los Angeles, CA',
+    condition: 'certified'
   },
   {
     id: '3',
@@ -52,7 +56,10 @@ export const cars: Car[] = [
     images: [
       'https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=800',
     ],
-    featured: false
+    featured: false,
+    availability: 'available',
+    location: 'Chicago, IL',
+    condition: 'used'
   },
   {
     id: '4',
@@ -68,7 +75,10 @@ export const cars: Car[] = [
     images: [
       'https://images.pexels.com/photos/3729464/pexels-photo-3729464.jpeg?auto=compress&cs=tinysrgb&w=800',
     ],
-    featured: true
+    featured: true,
+    availability: 'reserved',
+    location: 'San Francisco, CA',
+    condition: 'new'
   },
   {
     id: '5',
@@ -84,7 +94,10 @@ export const cars: Car[] = [
     images: [
       'https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=800',
     ],
-    featured: false
+    featured: false,
+    availability: 'available',
+    location: 'Miami, FL',
+    condition: 'used'
   },
   {
     id: '6',
@@ -100,7 +113,10 @@ export const cars: Car[] = [
     images: [
       'https://images.pexels.com/photos/210019/pexels-photo-210019.jpeg?auto=compress&cs=tinysrgb&w=800',
     ],
-    featured: false
+    featured: false,
+    availability: 'sold',
+    location: 'Dallas, TX',
+    condition: 'used'
   },
   {
     id: '7',
@@ -116,7 +132,10 @@ export const cars: Car[] = [
     images: [
       'https://images.pexels.com/photos/337909/pexels-photo-337909.jpeg?auto=compress&cs=tinysrgb&w=800',
     ],
-    featured: true
+    featured: true,
+    availability: 'available',
+    location: 'Detroit, MI',
+    condition: 'new'
   },
   {
     id: '8',
@@ -132,7 +151,10 @@ export const cars: Car[] = [
     images: [
       'https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg?auto=compress&cs=tinysrgb&w=800',
     ],
-    featured: false
+    featured: false,
+    availability: 'available',
+    location: 'Houston, TX',
+    condition: 'used'
   },
   {
     id: '9',
@@ -148,13 +170,19 @@ export const cars: Car[] = [
     images: [
       'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=800',
     ],
-    featured: false
+    featured: false,
+    availability: 'available',
+    location: 'Phoenix, AZ',
+    condition: 'certified'
   }
 ];
 
 export const makes = [...new Set(cars.map(car => car.make))];
 export const models = [...new Set(cars.map(car => car.model))];
 export const bodyTypes = [...new Set(cars.map(car => car.bodyType))];
+export const availabilityOptions = [...new Set(cars.map(car => car.availability))];
+export const conditionOptions = [...new Set(cars.map(car => car.condition))];
+export const locationOptions = [...new Set(cars.map(car => car.location))];
 export const years = [...new Set(cars.map(car => car.year))].sort((a, b) => a - b);
 
 // Get min and max prices from the data

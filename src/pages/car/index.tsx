@@ -1,40 +1,55 @@
 
-import { ArrowLeft, Calendar, ChevronLeft, ChevronRight, Fuel, GaugeCircle, Palette, Settings } from 'lucide-react';
+import { doc, getDoc } from 'firebase/firestore';
+import { AlertCircle, ArrowLeft, Calendar, CheckCircle, ChevronLeft, ChevronRight, Fuel, GaugeCircle, Palette, Settings, XCircle } from 'lucide-react';
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container } from '../../components/container';
-import { cars } from '../../data/cars';
-import type { Car } from "../../types";
+import { db } from '../../services/firebaseConnection';
+import type { CarProps } from "../../types";
 export function DetailCar() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [car, setCar] = useState<Car | null>(null);
+    const [car, setCar] = useState<CarProps | null>(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
-       function findCar() {
+       async function findCar() {
             if(!id) {return};
 
-            const findCar = cars.find((car) => car.id === id);
-            if(!findCar) {return};
-            setCar({ 
-                id: findCar.id,
-                make: findCar?.make,
-                model: findCar?.model,
-                year: findCar?.year, 
-                price: findCar?.price,
-                mileage: findCar?.mileage,
-                fuelType: findCar?.fuelType,
-                transmission: findCar?.transmission,
-                bodyType: findCar?.bodyType,
-                color: findCar?.color,
-                images: findCar?.images,
-                featured: findCar?.featured
-             });
+            const docRef = doc(db, "cars", id);
+            getDoc(docRef)
+            .then((snapshot) => {
+                if(!snapshot.exists()) {
+                    navigate("/manegecar", { replace: true }); 
+                    return
+                } 
+                setCar({ 
+                    id: snapshot.id,
+                    make: snapshot.data().make,
+                    model: snapshot.data().model,
+                    year: snapshot.data().year, 
+                    price: snapshot.data().price,
+                    images: snapshot.data().images,
+                    featured: snapshot.data().featured,
+                    availability: snapshot.data().availability,
+                    location: snapshot.data().location,
+                    condition: snapshot.data().condition,
+                    bodyType: snapshot.data().bodyType,
+                    fuelType: snapshot.data().fuelType, 
+                    transmission: snapshot.data().transmission,
+                    mileage: snapshot.data().mileage,
+                    color: snapshot.data().color
+                } as CarProps);
+                
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            
             console.log(findCar);
        }
        findCar();
-      }, [id]); 
+      }, [id, navigate]); 
 
       const nextImage = () => {
         if(!car) {return};
@@ -50,9 +65,9 @@ export function DetailCar() {
         );
     };
     const goToImage = (index: number) => {
-    setCurrentImageIndex(index);
-  };
-      if(!car) {
+        setCurrentImageIndex(index);
+    };
+    if(!car) {
         return (
             <div className="min-h-screen bg-gray-100 flex items-center justify-center">
                 <div className="text-center">
@@ -67,7 +82,45 @@ export function DetailCar() {
                 
             </div>
         )
-      }
+    }
+    const getAvailabilityColor = (status: string) => {
+    switch (status) {
+      case 'Available':
+        return 'bg-green-100 text-green-800';
+      case 'reserved':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'Sold':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getAvailabilityIcon = (status: string) => {
+    switch (status) {
+      case 'Available':
+        return <CheckCircle className="h-4 w-4 mr-2" />;
+      case 'reserved':
+        return <AlertCircle className="h-4 w-4 mr-2" />;
+      case 'Sold':
+        return <XCircle className="h-4 w-4 mr-2" />;
+      default:
+        return null;
+    }
+  };
+
+  const getConditionColor = (condition: string) => {
+    switch (condition) {
+      case 'New':
+        return 'bg-blue-100 text-blue-800';
+      case 'certified':
+        return 'bg-purple-100 text-purple-800';
+      case 'Used':
+        return 'bg-gray-100 text-gray-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
     return (
 
         <Container>
@@ -91,7 +144,7 @@ export function DetailCar() {
                             {/* Image Carousel */}
                             <div className='relative h-96 bg-gray-200'>
                                 <img className='w-full h-96 object-cover'
-                                src={car.images[currentImageIndex]} 
+                                src={car.images[currentImageIndex].url} 
                                 alt={`${car.make}${car.model}- Image ${currentImageIndex + 1}`} 
                                 />
                                  {/* Navigation Arrows */}
@@ -129,7 +182,7 @@ export function DetailCar() {
                                                                 : 'border-gray-300 hover:border-gray-400'} `} 
                                         >
                                             <img 
-                                                src={image} 
+                                                src={image.url} 
                                                 alt={`${car.make}${car.model}- thumbnail ${index + 1}`}
                                                 className='w-full h.full object-cover'
                                             />
@@ -146,9 +199,19 @@ export function DetailCar() {
                                 <h1 className='text-3xl font-bold text-gray-900'> {car.make}  {car.model} </h1>
                                 <div className='flex items-center'>
                                     <span className='text-2xl font-bold text-blue-600'>{car.price.toLocaleString()}</span>
-                                    {car.featured && (
-                                        <span className='ml-4 px-3 py-1 bg-yellow-100 text-sm font-semibold rounded-full'>Featured</span>
-                                    )}
+                                    <div className="flex gap-2">
+                                         {car.featured && (
+                                            <span className='ml-4 px-3 py-1 bg-yellow-100 text-sm font-semibold rounded-full'>Featured</span>
+                                        )}
+                                        <span className={` px-3 py-1 text-sm font-semibold rounded-full flex items-center ${getAvailabilityColor(car.availability)}`}>
+                                            {getAvailabilityIcon(car.availability)}
+                                            {car.availability}
+                                        </span>
+                                         <span className={` px-3 py-1 text-sm font-semibold rounded-full flex  ${getConditionColor(car.condition)}`}>
+                                            {car.condition}
+                                        </span>
+                                    </div>
+                                   
                                 </div>
                             </div>
 
@@ -193,7 +256,14 @@ export function DetailCar() {
                                         <div className='font-medium'>{car.color}</div>
                                     </div>
                                 </div>
-                                { /* DETAILS VEHICLE*/  }
+                                { /* Location*/  }
+                                <div className='flex items-center'>
+                                    <Palette className='h-5 w-5 text-gray-400 mr-2'/>
+                                    <div>
+                                        <div className='text-sm text-gray-500'>Location</div>
+                                        <div className='font-medium'>{car.location}</div>
+                                    </div>
+                                </div>
                             </div>
                             <div>
                                 <button className='w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-10000 transition-colors duration-200'>

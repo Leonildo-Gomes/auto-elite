@@ -1,10 +1,58 @@
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { Plus } from 'lucide-react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container } from '../../components/container';
 import { TableColumn } from '../../components/tableColumn';
-import { cars } from '../../data/cars';
+import { AuthContext } from '../../context/AuthContext';
+import { db } from "../../services/firebaseConnection";
+import type { CarProps } from "../../types";
+
  export function ManageCar() {
+    const { user } = useContext(AuthContext);
+    const [cars, setCars] = useState<CarProps[]>([])
     const navigate=useNavigate();
+
+    useEffect(() => {
+        async function getCars() {
+        if(!user?.uid){
+                return; 
+        } 
+        const carsRef = collection(db, "cars");
+        const queryRef=query(carsRef, where("userId", "==", user.uid));
+        getDocs(queryRef)
+        .then((snapshot) => {
+            const list=[] as CarProps[];
+            snapshot.forEach((doc) => {
+                list.push({
+                    id: doc.id,
+                    make: doc.data().make,
+                    model: doc.data().model,
+                    year: doc.data().year,
+                    price: doc.data().price,
+                    images: doc.data().images,
+                    featured: doc.data().featured,
+                    availability: doc.data().availability,
+                    location: doc.data().location,
+                    condition: doc.data().condition,
+                    bodyType: doc.data().bodyType,
+                    fuelType: doc.data().fuelType,
+                    transmission: doc.data().transmission,
+                    mileage: doc.data().mileage,
+                    color: doc.data().color
+                })
+            })
+            setCars(list);
+            console.log(list);
+        }).catch((error) => {
+            console.log(error);
+        })
+
+        
+    }
+        getCars();
+    }, [user]);
+    
     return (
        <Container>
             <div className='min-h-screen bg-gray-100 py-12'>
@@ -40,8 +88,8 @@ import { cars } from '../../data/cars';
                                         </th>
                                     </tr>
                                </thead>
-                               <tbody>
-                                    { cars.map( (car) => (<TableColumn car={car} />)) }
+                               <tbody >
+                                    { cars.map( (car) => (<TableColumn key={car.id} {...car} />)) }
 
                                </tbody>
                             </table>

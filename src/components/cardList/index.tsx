@@ -1,11 +1,12 @@
+import type { CarProps } from "../../types";
 import { CarCard } from "../carCard";
 
-import { cars } from '../../data/cars';
-
-export function CardList() {
-    const filteredCount=8;
-    const totalCount= 5;
-  
+interface CarListProps {
+  cars: CarProps[];
+  filteredCount: number;
+  totalCount: number;
+}
+export function CardList({ cars, filteredCount, totalCount }: CarListProps) {
     return (
         <section>
             <div className="flex justify-between items-center mb-4">
@@ -21,14 +22,11 @@ export function CardList() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         { cars .map((car) => (
-                            <CarCard car={car} key={car.id} />  
+                            <CarCard {...car} key={car.id} />  
                         ))} 
                     </div>
                 )
             }
-            
-            
-
         </section>
     )
 } 

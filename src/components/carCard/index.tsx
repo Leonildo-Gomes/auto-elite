@@ -1,28 +1,38 @@
 import { Banknote, Calendar, Fuel, GaugeCircle } from 'lucide-react';
-import type { CarCardProps } from "../../types";
+import type { CarProps } from "../../types";
 
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
  
 
 
 
 
-export function CarCard({ car } :   CarCardProps) {
-    const { id, make, model, year, price, mileage, fuelType, images, featured } = car;
+export function CarCard({ id, make,model,year,price, images, featured, availability, location, condition , transmission, bodyType, fuelType, mileage, color } :   CarProps) {
     const navigate = useNavigate();
+    const [loadImages, setLoadImages ] = useState<string[]>([]); 
   
-   
+   function handleImageLoad(id: string): void {
+        setLoadImages((prevState) => [...prevState, id]); 
+    }
   return (
         <div className='bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:translate-y-[-8px]'>
             { /* IMAGE*/ }
-
+            <div className="w-full rounded-lg h-72 bg-slate-200"
+                        style={{ display: loadImages.includes(id) ? 'none' : 'block' }}>
+            </div>
            <div>
-                <img src={images[0]} alt={`${make} ${model}`} />
+                <img 
+                    src={images[0].url} 
+                    alt={`${make} ${model}`} 
+                    onLoad={() => handleImageLoad(id)} 
+                    style={{ display: loadImages.includes(id) ? 'block' : 'none' }}
+                />
            </div>
            { /* INFO CAR*/ }
            <div className="p-4" >
                 <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-bold text-gray-800">{ make}</h3>
+                    <h3 className="text-lg font-bold text-gray-800">{make}</h3>
                     <span className="text-lg font-bold text-blue-600">{price}</span>
                 </div>
                 <div className='grid grid-cols-2 gap-y-2 mb-4'>
@@ -55,10 +65,7 @@ export function CarCard({ car } :   CarCardProps) {
                         Contact Seller
                     </button>
                 </div>
-
            </div>
-
-
         </div>
     )
 }
