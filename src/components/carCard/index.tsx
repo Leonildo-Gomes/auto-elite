@@ -1,5 +1,5 @@
 import { Banknote, Calendar, Fuel, GaugeCircle } from 'lucide-react';
-import type { CarProps } from "../../types";
+import type { CarCardProps } from "../../types";
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-export function CarCard({ id, make,model,year,price, images, featured, availability, location, condition , transmission, bodyType, fuelType, mileage, color } :   CarProps) {
+export function CarCard(car  :   CarCardProps) {
+    const { id, make,model,year,price, images,  fuelType, mileage}= car
     const navigate = useNavigate();
     const [loadImages, setLoadImages ] = useState<string[]>([]); 
   

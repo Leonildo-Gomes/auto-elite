@@ -41,6 +41,17 @@ interface CarImageProps {
      url: string 
 }
 
- export interface CarCardProps {
+/* export interface CarCardProps {
     car: Car;
-}
+}*/
+export type CarCardProps= Pick<
+  CarProps,
+  'id' | 'make' | 'model' | 'year' | 'price' | 'images'  | 'fuelType'  | 'mileage'
+>;
+
+
+export type CarTableProps = Pick<
+  CarProps,
+  'id' | 'make' | 'model' | 'year' | 'price' | 'images' | 'featured' | 'bodyType' | 'fuelType' | 'transmission'> & {
+  onDelete: (id: string) => void;
+};

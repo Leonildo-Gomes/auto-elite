@@ -1,9 +1,39 @@
+import { deleteDoc, doc } from 'firebase/firestore';
+import { deleteObject, ref } from 'firebase/storage';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import type { CarProps } from "../../types";
-export function TableColumn({ id, make,model,year,price, images, featured, availability, location, condition , transmission, bodyType, fuelType} :   CarProps) {
-     //const { make, model, year, price,  fuelType, images, featured, transmission } = car;
+import { db, storage } from '../../services/firebaseConnection';
+import type { CarTableProps } from "../../types";
+
+
+export function TableColumn( car: CarTableProps) {
+     const { id,make, model, year, price,  fuelType, images, featured, transmission , bodyType, onDelete} = car;
      const navigate = useNavigate();
+   async function handleDeleteCar( car: CarTableProps){
+        const docRef=doc(db, "cars", car.id);
+        await deleteDoc(docRef)
+        .then(()=> { 
+            toast.success('Car deleted successfully');
+            car.images.map( async (image)=>{ 
+                const imageRef= ref(storage, `images/${image.uid}/${image.name}/`);
+                try {
+                    await deleteObject(imageRef);
+                } catch (error) {
+                    toast.error('');
+                    console.log(error)    
+                }
+            })
+            onDelete(car.id);
+        })
+        .catch((error) => {
+            toast.error('Error deleting car');
+            console.log(error)
+         })
+
+       
+    }
+
     return (
         <tr  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             { /* IMGAGE and VEHICLE*/  }
@@ -50,11 +80,9 @@ export function TableColumn({ id, make,model,year,price, images, featured, avail
                 <button className='text-indigo-600 hover:text-indigo-900'>
                     <Pencil className="h-5 w-5 mr-1" />
                 </button>
-                <button className='text-red-600 hover:text-red-900'>
+                <button className='text-red-600 hover:text-red-900' onClick={()=> handleDeleteCar(car)}>
                     <Trash2 className="h-5 w-5 mr-1" />
                 </button>
-                <button></button>
-                <button></button>
              </div>
 
            </td>

@@ -52,7 +52,9 @@ import type { CarProps } from "../../types";
     }
         getCars();
     }, [user]);
-    
+    function handleDeleteLocal(id: string) {
+        setCars(prev => prev.filter(car => car.id !== id));
+    }   
     return (
        <Container>
             <div className='min-h-screen bg-gray-100 py-12'>
@@ -89,7 +91,7 @@ import type { CarProps } from "../../types";
                                     </tr>
                                </thead>
                                <tbody >
-                                    { cars.map( (car) => (<TableColumn key={car.id} {...car} />)) }
+                                    { cars.map( (car) => (<TableColumn key={car.id} {...car} onDelete={handleDeleteLocal}/>)) }
 
                                </tbody>
                             </table>
