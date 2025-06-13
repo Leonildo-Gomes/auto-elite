@@ -2,6 +2,8 @@
 
 Uma plataforma intuitiva, moderna e completamente responsiva para a gestão e visualização de veículos à venda!
 
+<img src="screenshot/home.jpeg" alt="Home" width="1200"/>
+
 ## Funcionalidades:
 
 ## Ferramentas: 
@@ -16,6 +18,7 @@ Uma plataforma intuitiva, moderna e completamente responsiva para a gestão e vi
 - [Axios](https://axios-http.com/docs/intro) - Cliente HTTP baseado em Promises para fazer requisições
 
 - [Firebase(Auth, Storage, Database) ](https://firebase.google.com/) - Autenticação, banco de dados e armazenamento de arquivos em tempo real
+
 ## Tecnologias Utilizadas:
 
 
@@ -35,3 +38,12 @@ Uma plataforma intuitiva, moderna e completamente responsiva para a gestão e vi
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&)
 
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+
+<img src="screenshot/login.png" alt="Tela de Detalhe" width="500"/>
+<img src="screenshot/login-mobile.jpeg" alt="Tela de Detalhe" width="500"/>
+<img src="screenshot/home-mobile.jpeg" alt="Tela de Home" width="500"/>
+<img src="screenshot/home.jpeg" alt="Tela de Home" width="500"/>
+<img src="screenshot/detailcar.png" alt="Tela de carrinho" width="500"/>
+<img src="screenshot/manager.jpeg" alt="Tela de favorito" width="500"/>
+<img src="screenshot/newcar.png" alt="Tela de Home Mobile" width="500"/>
+
