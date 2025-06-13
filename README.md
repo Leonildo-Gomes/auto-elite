@@ -73,6 +73,12 @@ Uma plataforma intuitiva, moderna e completamente responsiva para a gestão e vi
   - certifique -se de subsituir os valores de exemplo pelas informacoes do seu projeto Firebase
 A aplicação estará disponível em: `http://localhost:5173`
 
+## Funcionalidads:
+
+ - Listagem de Carros
+ - Cadastro de Carros
+ - Login e Cadastro de Utilizador
+ - Gestao de Carros
 
 
 
