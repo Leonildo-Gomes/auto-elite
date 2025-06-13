@@ -113,11 +113,11 @@ A aplicação estará disponível em: `http://localhost:5173`
  ```
 
 
-<img src="screenshot/login.png" alt="Tela de Detalhe" width="500"/>
+<img src="screenshot/login.png" alt="Tela de Detalhe" width="800"/>
 <img src="screenshot/login-mobile.jpeg" alt="Tela de Detalhe" width="200"/>
-<img src="screenshot/home-mobile.jpeg" alt="Tela de Home" width="500"/>
-<img src="screenshot/home.jpeg" alt="Tela de Home" width="500"/>
-<img src="screenshot/detailcar.png" alt="Tela de carrinho" width="500"/>
-<img src="screenshot/manager.jpeg" alt="Tela de favorito" width="500"/>
-<img src="screenshot/newcar.png" alt="Tela de Home Mobile" width="500"/>
+<img src="screenshot/home.jpeg" alt="Tela de Home" width="800"/>
+<img src="screenshot/home-mobile.jpeg" alt="Tela de Home" width="200"/>
+<img src="screenshot/detailcar.png" alt="Tela de carrinho" width="800"/>
+<img src="screenshot/manager.jpeg" alt="Tela de favorito" width="800"/>
+<img src="screenshot/newcar.png" alt="Tela de Home Mobile" width="800"/>
 
