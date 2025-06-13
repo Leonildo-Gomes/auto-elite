@@ -51,7 +51,7 @@ Uma plataforma intuitiva, moderna e completamente responsiva para a gestão e vi
 
 2. Instale as dependências:
   ```bash
-  cd petshop
+  cd auto-elite
   npm install
   ```
 
