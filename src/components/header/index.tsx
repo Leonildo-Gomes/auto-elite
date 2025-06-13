@@ -30,7 +30,7 @@ export function Header() {
                     { /* NAVBAR*/ }
                     <nav className="flex items-center space-x-6">
                         <Link to="/" className="hover:text-blue-300 transition-colors duration-200">Home</Link>
-                        <Link to="/inventory" className="hover:text-blue-300 transition-colors duration-200">Inventory</Link>
+                        
                          { signed && 
                             <Link to="/managecar" className="hover:text-blue-300 transition-colors duration-200">Manage Car</Link>
                          }

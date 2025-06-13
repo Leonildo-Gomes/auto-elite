@@ -1,6 +1,6 @@
 import { deleteDoc, doc } from 'firebase/firestore';
 import { deleteObject, ref } from 'firebase/storage';
-import { Eye, Pencil, Trash2 } from 'lucide-react';
+import { AlertCircle, CheckCircle, Eye, Pencil, Trash2, XCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { db, storage } from '../../services/firebaseConnection';
@@ -8,7 +8,7 @@ import type { CarTableProps } from "../../types";
 
 
 export function TableColumn( car: CarTableProps) {
-     const { id,make, model, year, price,  fuelType, images, featured, transmission , bodyType, onDelete} = car;
+     const { id,make, model, year, price,  fuelType, images, featured, transmission , bodyType,availability,condition, onDelete} = car;
      const navigate = useNavigate();
    async function handleDeleteCar( car: CarTableProps){
         const docRef=doc(db, "cars", car.id);
@@ -33,7 +33,44 @@ export function TableColumn( car: CarTableProps) {
 
        
     }
+    const getAvailabilityColor = (status: string) => {
+    switch (status) {
+      case 'Available':
+        return 'bg-green-100 text-green-800';
+      case 'reserved':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'Sold':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
 
+    const getAvailabilityIcon = (status: string) => {
+        switch (status) {
+        case 'Available':
+            return <CheckCircle className="h-4 w-4 mr-1" />;
+        case 'reserved':
+            return <AlertCircle className="h-4 w-4 mr-1" />;
+        case 'Sold':
+            return <XCircle className="h-4 w-4 mr-1" />;
+        default:
+            return null;
+        }
+    };
+
+    const getConditionColor = (condition: string) => {
+        switch (condition) {
+        case 'New':
+            return 'bg-blue-100 text-blue-800';
+        case 'certified':
+            return 'bg-purple-100 text-purple-800';
+        case 'Used':
+            return 'bg-gray-100 text-gray-800';
+        default:
+            return 'bg-gray-100 text-gray-800';
+        }
+    }; 
     return (
         <tr  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             { /* IMGAGE and VEHICLE*/  }
@@ -62,14 +99,24 @@ export function TableColumn( car: CarTableProps) {
             </td>
             { /* PRICE*/  } 
             <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900 font-medium">${price}</div>
+                <div className="text-sm text-gray-900 font-medium">${price.toLocaleString('nb-NO', { style: 'currency', currency: 'NOK' })}</div>
             </td>
             { /* STATUS*/  } 
-            <td>
-                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${featured ?      'bg-green-100 text-green-800' : ' bg-gray-100 text-gray-800' }` } >
-                    {featured ? 'Featured' : 'Standard'}
-
-                </span>
+            <td className='px-6 py-4 whitespace-nowrap'>
+               <div className='gap-1 flex flex-col'>
+                    <span className={`px-2  text-xs leading-5 font-semibold rounded-full flex items-center ${getAvailabilityColor(car.availability)}`}>
+                          {getAvailabilityIcon(car.availability)}
+                         { availability } 
+                    </span>
+                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getConditionColor(car.condition)}`}>
+                         { condition } 
+                    </span>
+                   {featured && (
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                        Featured
+                        </span>
+                   )}
+               </div> 
             </td>
            { /* ACTIONS*/  } 
            <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>

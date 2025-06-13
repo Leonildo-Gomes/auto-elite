@@ -46,12 +46,12 @@ interface CarImageProps {
 }*/
 export type CarCardProps= Pick<
   CarProps,
-  'id' | 'make' | 'model' | 'year' | 'price' | 'images'  | 'fuelType'  | 'mileage'
+  'id' | 'make' | 'model' | 'year' | 'price' | 'images'  | 'fuelType'  | 'mileage'| 'featured'| 'availability'| 'condition'| 'location'
 >;
 
 
 export type CarTableProps = Pick<
   CarProps,
-  'id' | 'make' | 'model' | 'year' | 'price' | 'images' | 'featured' | 'bodyType' | 'fuelType' | 'transmission'> & {
+  'id' | 'make' | 'model' | 'year' | 'price' | 'images' | 'featured' | 'bodyType' | 'fuelType' | 'transmission' | 'availability' | 'condition'> & {
   onDelete: (id: string) => void;
 };

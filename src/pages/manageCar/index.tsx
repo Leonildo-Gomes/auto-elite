@@ -54,7 +54,8 @@ import type { CarProps } from "../../types";
     }, [user]);
     function handleDeleteLocal(id: string) {
         setCars(prev => prev.filter(car => car.id !== id));
-    }   
+    }
+      
     return (
        <Container>
             <div className='min-h-screen bg-gray-100 py-12'>

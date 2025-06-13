@@ -49,7 +49,6 @@ export function NewCar() {
     ); 
     const [carImages, setCarImages ] =useState<ImageItemProps[]> ([]); 
     function onSubmit(data: FormData) {
-        console.log('aqui no form')
         console.log(data);
         if(!user?.uid) {
             toast.error('User not logged in');
@@ -57,6 +56,7 @@ export function NewCar() {
         }
         if(carImages.length=== 0){
             toast.error('Please add at least one image');
+            return;
         }
         const carListImages= carImages.map((image) => {
             return {
@@ -86,12 +86,13 @@ export function NewCar() {
             owner:user.name,
         })
         .then(() => {
-            toast.success('Car added successfully');
+        toast.success('Car added successfully');
            reset();
            setCarImages([]);
         })
         .catch((error) => {
-            toast.error('Error adding car: ' + error);
+            toast.error('Error adding car:');
+            console.log(error);
         });
 
 

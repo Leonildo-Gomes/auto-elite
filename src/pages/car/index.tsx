@@ -1,6 +1,6 @@
 
 import { doc, getDoc } from 'firebase/firestore';
-import { AlertCircle, ArrowLeft, Calendar, CheckCircle, ChevronLeft, ChevronRight, Fuel, GaugeCircle, Palette, Settings, XCircle } from 'lucide-react';
+import { AlertCircle, ArrowLeft, Calendar, CheckCircle, ChevronLeft, ChevronRight, Fuel, GaugeCircle, MapPin, Palette, Settings, XCircle } from 'lucide-react';
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container } from '../../components/container';
@@ -198,7 +198,7 @@ export function DetailCar() {
                             <div className='mb-6'>
                                 <h1 className='text-3xl font-bold text-gray-900'> {car.make}  {car.model} </h1>
                                 <div className='flex items-center'>
-                                    <span className='text-2xl font-bold text-blue-600'>{car.price.toLocaleString()}</span>
+                                    <span className='text-2xl font-bold text-blue-600'>{car.price.toLocaleString('nb-No', { style: 'currency', currency: 'NOK' })}</span>
                                     <div className="flex gap-2">
                                          {car.featured && (
                                             <span className='ml-4 px-3 py-1 bg-yellow-100 text-sm font-semibold rounded-full'>Featured</span>
@@ -229,7 +229,7 @@ export function DetailCar() {
                                     <GaugeCircle className='h-5 w-5 text-gray-400 mr-2'/>
                                     <div>
                                         <div className='text-sm text-gray-500'>Mileage</div>
-                                        <div className="font-medium">{car.mileage.toLocaleString()}</div>
+                                        <div className="font-medium">{car.mileage.toLocaleString()} mi</div>
                                     </div>
                                 </div>
                                 { /* FLUEL*/  }
@@ -258,19 +258,31 @@ export function DetailCar() {
                                 </div>
                                 { /* Location*/  }
                                 <div className='flex items-center'>
-                                    <Palette className='h-5 w-5 text-gray-400 mr-2'/>
+                                    <MapPin className='h-5 w-5 text-gray-400 mr-2'/>
                                     <div>
                                         <div className='text-sm text-gray-500'>Location</div>
                                         <div className='font-medium'>{car.location}</div>
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <button className='w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-10000 transition-colors duration-200'>
-                                        
-                                        Book Now
+                            <div className='space-y-4'>
+                                <button className={`w-full py-3 px-6 rounded-lg transition-colors duration-200 ${
+                                        car.availability === 'Available' 
+                                        ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                                        : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                                    }`}
+                                    disabled={car.availability !== 'Available'}
+                                >   
+                                 <a href={`https://api.whatsapp.com/send?phone=${9882661}&text= Ola vie esse carro ${car?.make} no site WebCarros e fiquei interessado!`}></a>
+                                     {car.availability === 'Available' ? 'Contact Seller' : 'Sold' }
                                 </button>
-                                <button className='w-full bg-gray-100 text-gray-800 py-3 px-6 rounded-lg hover:bg-gray-200 transition-colors duration-200 mt-4'>
+                                <button className={`w-full py-3 px-6 rounded-lg transition-colors duration-200 ${
+                                        car.availability === 'available' 
+                                        ? 'bg-gray-100 text-gray-800 hover:bg-gray-200' 
+                                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                    }`}
+                                    disabled={car.availability !== 'available'}
+                                >
                                     Schedule Test Drive
                                 </button>
                             </div>
