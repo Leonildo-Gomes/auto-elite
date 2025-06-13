@@ -2,6 +2,8 @@
 
 Uma plataforma intuitiva, moderna e completamente responsiva para a gestão e visualização de veículos à venda!
 
+- https://auto-elite-lime.vercel.app/
+
 <img src="screenshot/home.jpeg" alt="Home" width="1200"/>
 
 ## Funcionalidades:
@@ -39,8 +41,80 @@ Uma plataforma intuitiva, moderna e completamente responsiva para a gestão e vi
 
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 
+
+## 🖥️ Como executar o projeto
+
+1. Clone o repositório:
+  ```bash
+  https://github.com/Leonildo-Gomes/auto-elite.git
+  ```
+
+2. Instale as dependências:
+  ```bash
+  cd petshop
+  npm install
+  ```
+
+3. Execute o projeto:
+  ```bash
+  npm run dev
+  ```
+
+4.Configure as variáveis de ambiente:
+  - Crie um arquivo .env na raiz do projecto a adicione as seguintes variaveis de ambiente do firebase:
+  ```bash
+  VITE_FIREBASE_API_KEY= 
+  VITE_FIREBASE_AUTH_DOMAIN= 
+  VITE_FIREBASE_PROJECT_ID= 
+  VITE_FIREBASE_STORAGE_BUCKET= 
+  VITE_FIREBASE_MESSAGING_SENDER_ID= 
+  VITE_FIREBASE_APP_ID=
+  ```
+  - certifique -se de subsituir os valores de exemplo pelas informacoes do seu projeto Firebase
+A aplicação estará disponível em: `http://localhost:5173`
+
+
+
+
+## 📂 Estrutura do Projeto
+
+```
+ src/
+ ├── components/
+ │   ├── header/
+ │   ├── layout/
+ │   ├── carCard/
+ │   ├── carList/
+ │   ├── footer/
+ │   ├── filterSection/
+ │   ├── container/
+ │   ├── input/
+ │   ├── selectInput/
+ │   └── tableColumn/
+ ├── context/
+ │   ├── AuthContext.tsx
+ │   └── AuthProvider.tsx
+ ├── pages/
+ │   ├── home/
+ │   ├── car/
+ │   ├── login/
+ │   ├── register/
+ │   ├── manageCar/
+ │   ├── dashboard/
+ │   └── notFound/
+ ├── services/
+ │   └── firebaseConnection
+ ├── routes/
+ │   ├── router
+ │   └── Private
+ ├── types/
+ │   └── index.tsx
+ └── App.tsx
+ ```
+
+
 <img src="screenshot/login.png" alt="Tela de Detalhe" width="500"/>
-<img src="screenshot/login-mobile.jpeg" alt="Tela de Detalhe" width="500"/>
+<img src="screenshot/login-mobile.jpeg" alt="Tela de Detalhe" width="200"/>
 <img src="screenshot/home-mobile.jpeg" alt="Tela de Home" width="500"/>
 <img src="screenshot/home.jpeg" alt="Tela de Home" width="500"/>
 <img src="screenshot/detailcar.png" alt="Tela de carrinho" width="500"/>
