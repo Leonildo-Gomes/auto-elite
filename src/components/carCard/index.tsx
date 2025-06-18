@@ -76,7 +76,7 @@ export function CarCard(car  :   CarCardProps) {
                         style={{ display: loadImages.includes(id) ? 'none' : 'block' }}>
             </div>
            <div>
-                <img 
+                <img className='w-full rounded-md h-72'
                     src={images[0]?.url} 
                     alt={`${make} ${model}`} 
                     onLoad={() => handleImageLoad(id)} 

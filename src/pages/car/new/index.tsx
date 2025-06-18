@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addDoc, collection } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { Plus, Trash, Upload } from 'lucide-react';
+import { Trash, Upload } from 'lucide-react';
 import { useContext, useState, type ChangeEvent } from 'react';
 import { useForm } from "react-hook-form";
 import toast from 'react-hot-toast';
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { v4 as uuidV4 } from 'uuid';
 import { z } from 'zod';
 import { Container } from "../../../components/container";
+import { ButtonSubmit } from '../../../components/customButton';
 import { InputField } from '../../../components/input';
 import { SelectField } from '../../../components/selectInput';
 import { AuthContext } from '../../../context/AuthContext';
@@ -48,7 +49,8 @@ export function NewCar() {
         } 
     ); 
     const [carImages, setCarImages ] =useState<ImageItemProps[]> ([]); 
-    function onSubmit(data: FormData) {
+    async function onSubmit(data: FormData) {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
         console.log(data);
         if(!user?.uid) {
             toast.error('User not logged in');
@@ -356,11 +358,7 @@ export function NewCar() {
                             onClick= {() => navigate(-1)}>
                             Cancel
                         </button>
-                        <button className='px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
-                            type="submit">
-                            <Plus className=" inline-block h-5 w-5 mr-2" />
-                            Add Vehicle
-                        </button>
+                        <ButtonSubmit />
                     </div>
                 </form>
             </div>

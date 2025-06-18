@@ -2,6 +2,7 @@ import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { CardList } from "../../components/cardList";
 import { Container } from "../../components/container";
+import { HeroBanner } from "../../components/heroBanner";
 import { db } from "../../services/firebaseConnection";
 import type { CarProps } from "../../types";
 
@@ -42,12 +43,18 @@ export function Home() {
         getCars();
     },[])
     return (
-        <Container>
-           { /* <FilterSection></FilterSection>*/  }
-            <CardList cars={cars}
-                filteredCount={cars.length}
-                totalCount={cars.length}
-            />
-        </Container>
+        <>  
+            <HeroBanner/>
+            <main className=" mt-12 max-auto px-4">
+                <Container>
+                    { /* <FilterSection></FilterSection>*/  }
+                    <CardList cars={cars}
+                        filteredCount={cars.length}
+                        totalCount={cars.length}
+                    />
+            </Container>
+            </main>
+            
+        </>
     )
 } 
