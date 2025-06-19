@@ -7,11 +7,11 @@ import { db } from "../../services/firebaseConnection";
 import type { CarProps } from "../../types";
 
 export function Home() {
-     const [cars, setCars] = useState<CarProps[]>([]);
+    const [cars, setCars] = useState<CarProps[]>([]);
     
 
     useEffect(()=> {
-        function getCars() {
+        async function getCars() {
             const carsRef = collection(db, "cars");
             const queryRef=query(carsRef, orderBy("createdAt", "desc"));
             getDocs(queryRef)

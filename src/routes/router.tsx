@@ -39,13 +39,13 @@ const router = createBrowserRouter([
                 path: '/detail-car/:id',
                 element:  <DetailCar/> 
             },
-             {
+            {
                 path: '/new-car',
-                element:  <NewCar/> 
+                element:  <NewCar isEdit={false}/> 
             },
             {
                 path: '/edit-car/:id',
-                element:  <NewCar/> 
+                element:  <NewCar isEdit={true}/> 
             },
             {
                 path: '*',
