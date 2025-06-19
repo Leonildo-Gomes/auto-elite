@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { Trash, Upload } from 'lucide-react';
-import { useContext, useState, type ChangeEvent } from 'react';
+import { useContext, useEffect, useState, type ChangeEvent } from 'react';
 import { useForm } from "react-hook-form";
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidV4 } from 'uuid';
 import { z } from 'zod';
 import { Container } from "../../../components/container";
@@ -39,6 +39,7 @@ const schema = z.object({
 })
 type FormData= z.infer<typeof schema>
 export function NewCar() {
+     const { id } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
 
@@ -49,8 +50,31 @@ export function NewCar() {
         } 
     ); 
     const [carImages, setCarImages ] =useState<ImageItemProps[]> ([]); 
+
+    useEffect(() => {
+        async function findCar() {
+            if(id) {
+                const docRef= doc(db, "cars", id);
+                getDoc(docRef)
+                .then((snapshot) => {
+                    const carData = snapshot.data();
+                    reset(carData as FormData);
+                    if (carData?.images && Array.isArray(carData.images)) {
+                        const previewImages = carData.images.map((image: ImageItemProps) => ({
+                            ...image,
+                            previewUrl: image.url, // usando a mesma URL
+                        }));
+                        setCarImages(previewImages);
+                    }
+                })
+            } else {
+                reset();
+            } 
+        }
+        findCar();
+    }, [id, reset]);
     async function onSubmit(data: FormData) {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        //await new Promise((resolve) => setTimeout(resolve, 3000));
         console.log(data);
         if(!user?.uid) {
             toast.error('User not logged in');
@@ -67,6 +91,55 @@ export function NewCar() {
                 url: image.url,
             }
         })
+        const carData = {
+            make: data.make,
+            model: data.model,
+            year: data.year,
+            price: data.price,
+            mileage: data.mileage,
+            fuelType: data.fuelType,
+            transmission: data.transmission,
+            bodyType: data.bodyType,
+            condition: data.condition,
+            availability: data.availability,
+            location: data.location,
+            color: data.color,
+            images: carListImages,
+            featured: data.featured ?? false,
+            userId: user.uid,
+            owner: user.name,
+        };
+
+        if(id) {
+            //Update car
+            const docRef = doc(db, "cars", id);
+            await updateDoc(docRef, { 
+                ...carData,
+                updatedAt: new Date(),
+            })
+            .then(() => {
+                toast.success('Car updated successfully');
+                navigate(-1);
+            })
+            .catch((error) => {
+                toast.error('Error updating car:');
+                console.log(error);
+            });
+            
+            return;
+        }  else {
+            //Add new car
+            await addDoc(collection(db, 'cars'),{ 
+                ...carData,
+                createdAt: new Date(),
+            } )
+            .then(() => {
+                toast.success("Car added successfully");
+                reset();
+                setCarImages([]);
+                
+            })
+        }   
 
         addDoc(collection(db, 'cars'), {
             make: data.make,

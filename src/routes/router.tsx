@@ -44,6 +44,10 @@ const router = createBrowserRouter([
                 element:  <NewCar/> 
             },
             {
+                path: '/edit-car/:id',
+                element:  <NewCar/> 
+            },
+            {
                 path: '*',
                 element: <NotFound />
             }

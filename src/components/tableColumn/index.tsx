@@ -124,7 +124,7 @@ export function TableColumn( car: CarTableProps) {
                 <button className='text-blue-600 hover:text-indigo-900' onClick={() => navigate(`/detail-car/${id}`)}>
                     <Eye className="h-5 w-5 mr-1" />
                 </button>
-                <button className='text-indigo-600 hover:text-indigo-900'>
+                <button className='text-indigo-600 hover:text-indigo-900' onClick={() => navigate(`/edit-car/${id}`)}>
                     <Pencil className="h-5 w-5 mr-1" />
                 </button>
                 <button className='text-red-600 hover:text-red-900' onClick={()=> handleDeleteCar(car)}>
