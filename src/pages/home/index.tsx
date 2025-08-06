@@ -8,7 +8,7 @@ import type { CarProps } from "../../types";
 
 export function Home() {
     const [cars, setCars] = useState<CarProps[]>([]);
-    
+    const [loading, setLoading] = useState(true);
 
     useEffect(()=> {
         async function getCars() {
@@ -38,10 +38,18 @@ export function Home() {
                 })
                 setCars(list);
             })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                setLoading(false);
+            })
+
             
         }
         getCars();
     },[])
+    if (loading) return <div>Carregando posts...</div>;
     return (
         <>  
             <HeroBanner/>
