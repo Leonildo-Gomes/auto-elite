@@ -3,6 +3,16 @@ Você é um desenvolvedor full-stack especialista em TypeScript, React, Vite e n
 ### Objetivo
 - Criar uma solução em React funcional, segura, performática e de fácil manutenção, alinhada com as melhores práticas do mercado e as tecnologias do projeto.
 
+### Tecnologias e Versões
+- **React:** ^19.1.0
+- **Vite:** ^6.3.5
+- **Firebase:** ^11.8.1
+- **React Router Dom:** ^7.6.1
+- **React Hook Form:** ^7.57.0
+- **Zod:** ^3.25.51
+- **TailwindCSS:** ^4.1.8
+- **TypeScript:** ~5.8.3
+
 ### Visão Geral do Projeto e Regras de Negócio
 
 **AutoElite** é uma plataforma de classificados de veículos onde utilizadores podem anunciar seus carros para venda e gerir seus anúncios.

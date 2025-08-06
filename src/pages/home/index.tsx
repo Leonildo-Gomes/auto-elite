@@ -1,65 +1,35 @@
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { CardList } from "../../components/cardList";
 import { FeaturedCars } from "../../components/featuredCars";
 import { HeroBanner } from "../../components/heroBanner";
-import { db } from "../../services/firebaseConnection";
-import type { CarProps } from "../../types";
+import { Loading } from "../../components/loading";
+import { fetchCars } from "../../api/cars";
+import { carKeys } from "../../api/queryKeys";
 
 export function Home() {
-    const [cars, setCars] = useState<CarProps[]>([]);
-    const [loading, setLoading] = useState(true);
+    const { data: cars, isLoading, isError } = useQuery({
+        queryKey: carKeys.all,
+        queryFn: fetchCars
+    });
 
-    useEffect(()=> {
-        async function getCars() {
-            const carsRef = collection(db, "cars");
-            const queryRef=query(carsRef, orderBy("createdAt", "desc"));
-            getDocs(queryRef)
-            .then((snapshot) => {
-                const list=[] as CarProps[];
-                snapshot.forEach((doc) => {
-                    list.push({
-                        id: doc.id,
-                        make: doc.data().make,
-                        model: doc.data().model,
-                        year: doc.data().year,
-                        price: doc.data().price,
-                        images: doc.data().images,
-                        featured: doc.data().featured,
-                        availability: doc.data().availability,
-                        location: doc.data().location,
-                        condition: doc.data().condition,
-                        bodyType: doc.data().bodyType,
-                        fuelType: doc.data().fuelType,
-                        transmission: doc.data().transmission,
-                        mileage: doc.data().mileage,
-                        color: doc.data().color
-                    })
-                })
-                setCars(list);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                setLoading(false);
-            })
+    if (isLoading) return <Loading />;
 
-            
-        }
-        getCars();
-    },[])
-    if (loading) return <div>Carregando posts...</div>;
+    if (isError) {
+        return <div className="text-center mt-8 text-red-500">Ocorreu um erro ao buscar os carros. Tente novamente mais tarde.</div>;
+    }
+
+    const safeCars = cars || [];
+
     return (
         <>  
             <HeroBanner/>
             
             <main className="container py-12 mx-auto px-4">
-                    <FeaturedCars cars={cars}/>
+                    <FeaturedCars cars={safeCars}/>
                     { /* <FilterSection></FilterSection>*/  }
-                    <CardList cars={cars}
-                        filteredCount={cars.length}
-                        totalCount={cars.length}
+                    <CardList cars={safeCars}
+                        filteredCount={safeCars.length}
+                        totalCount={safeCars.length}
                     /> 
             </main>
             
